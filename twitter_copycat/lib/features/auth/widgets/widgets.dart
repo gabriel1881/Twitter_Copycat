@@ -210,3 +210,78 @@ class LoginText extends StatelessWidget {
     );
   }
 }
+
+class GoogleButton extends StatelessWidget {
+  const GoogleButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        // Google Login
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Pallete.whiteColor,
+        foregroundColor: Pallete.backgroundColor,
+        minimumSize: const Size(300, 50),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25),
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SvgPicture.asset(
+            AssetsConstants.googleIcon, 
+            height: 24.0, 
+            width: 24.0,
+          ),
+          const SizedBox(width: 150), 
+        ],
+      ),
+    );
+  }
+}
+
+class OrLine extends StatelessWidget {
+  const OrLine({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const SizedBox(
+      width: 300, 
+      child: Row(
+        children: [
+          Expanded(child: Divider(color: Pallete.geryWhiteColor)),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 6.0),
+            child: Text("or", style: TextStyle(color: Pallete.geryWhiteColor)),
+          ),
+          Expanded(child: Divider(color: Pallete.geryWhiteColor)),
+        ],
+      ),
+    );
+  }
+}
+
+class CreateAccountButton extends StatelessWidget {
+  const CreateAccountButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        // Navigate to Create Account screen
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Pallete.greyBlueColor,
+        foregroundColor: Pallete.whiteColor,
+        minimumSize: const Size(300, 50),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25),
+        ),
+      ),
+      child: const Text("Create account"),
+    );
+  }
+}
