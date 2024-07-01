@@ -242,28 +242,6 @@ class GoogleButton extends StatelessWidget {
     );
   }
 }
-
-class OrLine extends StatelessWidget {
-  const OrLine({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const SizedBox(
-      width: 300, 
-      child: Row(
-        children: [
-          Expanded(child: Divider(color: Pallete.geryWhiteColor)),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 6.0),
-            child: Text("or", style: TextStyle(color: Pallete.geryWhiteColor)),
-          ),
-          Expanded(child: Divider(color: Pallete.geryWhiteColor)),
-        ],
-      ),
-    );
-  }
-}
-
 class CreateAccountButton extends StatelessWidget {
   const CreateAccountButton({super.key});
 
@@ -282,6 +260,27 @@ class CreateAccountButton extends StatelessWidget {
         ),
       ),
       child: const Text("Create account"),
+    );
+  }
+}
+
+class OrLine extends StatelessWidget {
+  const OrLine({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const SizedBox(
+      width: 300, 
+      child: Row(
+        children: [
+          Expanded(child: Divider(color: Pallete.geryWhiteColor)),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 6.0),
+            child: Text("or", style: TextStyle(color: Pallete.geryWhiteColor)),
+          ),
+          Expanded(child: Divider(color: Pallete.geryWhiteColor)),
+        ],
+      ),
     );
   }
 }
