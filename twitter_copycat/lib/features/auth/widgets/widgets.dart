@@ -1,7 +1,9 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:twitter_copycat/constants/assets_constants.dart';
 import 'package:twitter_copycat/theme/pallete.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class TwitterHeader extends StatelessWidget {
@@ -98,6 +100,113 @@ class BackTwitterHeader extends TwitterHeader {
         const SizedBox(width: 68), // 68 units spacing
         super.build(context), // Calls build method of BirdBar to display Twitter icon
       ],
+    );
+  }
+}
+
+class Space extends StatelessWidget {
+  final double height;
+  const Space({required this.height, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(height: height);
+  }
+}
+
+class LargeText extends StatelessWidget {
+  final String text;
+
+  const LargeText({super.key, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 26),
+      child: Text(
+        text,
+        textAlign: TextAlign.left,
+        style: const TextStyle(fontSize: 28, color: Pallete.whiteColor),
+      ),
+    );
+  }
+}
+
+class SmallText extends StatelessWidget {
+  const SmallText({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 40), 
+      alignment: Alignment.centerLeft, 
+      child: Text.rich(
+        TextSpan(
+          text: 'By signing up, you agree to our ',
+          style: const TextStyle(fontSize: 8, color: Pallete.geryWhiteColor),
+          children: <TextSpan>[
+            TextSpan(
+              text: 'Terms',
+              style: const TextStyle(color: Pallete.greyBlueColor),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  launch('https://twitter.com/tos');
+                },
+            ),
+            const TextSpan(
+              text: ', ',
+            ),
+            TextSpan(
+              text: 'Privacy Policy',
+              style: const TextStyle(color: Pallete.greyBlueColor),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  launch('https://twitter.com/privacy');
+                },
+            ),
+            const TextSpan(
+              text: ', and ',
+            ),
+            TextSpan(
+              text: 'Cookie Use',
+              style: const TextStyle(color: Pallete.greyBlueColor),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  launch('https://twitter.com/cookies');
+                },
+            ),
+          ],
+        ),
+        textAlign: TextAlign.left,
+      ),
+    );
+  }
+}
+
+class LoginText extends StatelessWidget {
+  const LoginText({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 40), 
+      alignment: Alignment.centerLeft, 
+      child: RichText(
+        text: TextSpan(
+          text: 'Have an account already? ',
+          style: const TextStyle(color: Pallete.geryWhiteColor),
+          children: <TextSpan>[
+            TextSpan(
+              text: 'Log in',
+              style: const TextStyle(color: Pallete.greyBlueColor),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  // Navigate to login screen
+                },
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
