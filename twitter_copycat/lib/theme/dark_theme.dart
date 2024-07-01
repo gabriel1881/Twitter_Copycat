@@ -3,9 +3,9 @@ import 'package:twitter_copycat/theme/pallete.dart';
 
 class AppTheme {
   static ThemeData theme = ThemeData.dark().copyWith(
-    scaffoldBackgroundColor: Color.fromARGB(22,22,22,1),
+    scaffoldBackgroundColor: const Color.fromARGB(20, 255, 255, 255),
     appBarTheme: const AppBarTheme(
-      backgroundColor: Color.fromARGB(22,22,22,1),
+      backgroundColor: Color.fromARGB(20, 255, 255, 255),
       elevation: 0,
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(

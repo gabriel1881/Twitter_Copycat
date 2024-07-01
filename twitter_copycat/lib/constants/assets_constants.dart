@@ -16,4 +16,7 @@ class AssetsConstants {
   static const String viewsIcon = '$_svgsPath/views.svg';
   static const String verifiedIcon = '$_svgsPath/verified.svg';
   static const String starsIcon = '$_svgsPath/stars.svg';
+  static const String googleIcon = '$_svgsPath/google.svg';
+  static const String backIcon = '$_svgsPath/back_arrow.svg';
+  static const String xIcon = '$_svgsPath/x.svg';
 }
