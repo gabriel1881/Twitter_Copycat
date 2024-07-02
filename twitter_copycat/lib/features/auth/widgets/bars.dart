@@ -145,3 +145,66 @@ class CustomBottomNavigation extends StatelessWidget {
     );
   }
 }
+
+class CustomBottomNavigationWithPass extends StatelessWidget {
+  final String nextPageRoute;
+
+  const CustomBottomNavigationWithPass({
+    super.key,
+    required this.nextPageRoute,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      decoration: const BoxDecoration(
+        color: Pallete.greyBackgroundColor,
+        border: Border(top: BorderSide(color: Pallete.greyColor)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          GestureDetector(
+            onTap: () {
+              // Navigate to Forgot Password screen (to be implemented)
+              Navigator.pushNamed(context, '/forgot_password');
+            },
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Text(
+                'Forgot password?',
+                style: TextStyle(
+                  color: Pallete.blueColor,
+                  fontSize: 14, // Tamaño de texto ajustado
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, nextPageRoute);
+            },
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Pallete.greyBlueColor,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Text(
+                'Next',
+                style: TextStyle(
+                  color: Pallete.whiteColor,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

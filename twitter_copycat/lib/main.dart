@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_copycat/features/auth/view/login_view.dart';
+import 'package:twitter_copycat/features/auth/view/password_view.dart';
 import 'package:twitter_copycat/features/auth/view/register_view.dart';
+import 'package:twitter_copycat/features/auth/view/usr_view.dart';
 import 'package:twitter_copycat/theme/theme.dart';
 
 void main() {
@@ -21,6 +23,8 @@ class MyApp extends StatelessWidget {
         '/': (context) => const LoginView(), // Ruta inicial
         '/login': (context) => const LoginView(),
         '/register': (context) => const RegisterView(),
+        '/usr': (context) => const UsrView(),
+        '/pass': (context) => const PasswordView(),
       },
     );
   }

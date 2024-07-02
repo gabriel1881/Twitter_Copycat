@@ -48,7 +48,7 @@ class _RegisterViewState extends State<RegisterView> {
       ),
       // Bottom nav bar
       bottomNavigationBar: CustomBottomNavigation(
-        nextPageRoute: '/login', 
+        nextPageRoute: '/usr', 
       ),
     );
   }

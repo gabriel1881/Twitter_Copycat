@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:twitter_copycat/constants/assets_constants.dart';
 import 'package:twitter_copycat/theme/pallete.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -213,3 +215,79 @@ class _CustomTextFieldWithCounterState extends _CustomTextFieldState {
   }
 }
 
+class CustomPasswordField extends StatefulWidget {
+  final String hintText;
+  final int? maxLength;
+
+  const CustomPasswordField({
+    super.key,
+    required this.hintText,
+    this.maxLength,
+  });
+
+  @override
+  _CustomPasswordFieldState createState() => _CustomPasswordFieldState();
+}
+
+class _CustomPasswordFieldState extends State<CustomPasswordField> {
+  final TextEditingController _controller = TextEditingController();
+  bool _obscureText = true; // Estado para controlar la visibilidad del texto
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 30),
+          child: TextField(
+            controller: _controller,
+            maxLength: widget.maxLength,
+            obscureText: _obscureText, // Mostrar asteriscos o texto plano según el estado
+            decoration: InputDecoration(
+              hintText: widget.hintText,
+              hintStyle: TextStyle(
+                color: _controller.text.isNotEmpty ? Colors.transparent : Pallete.greyColor,
+              ),
+              enabledBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(color: Pallete.greyColor, width: 1.0),
+              ),
+              focusedBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(color: Pallete.blueColor, width: 1.0),
+              ),
+              counterText: '',
+              suffixIcon: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _obscureText = !_obscureText; // Alternar entre mostrar y ocultar texto
+                  });
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  child: SvgPicture.asset(
+                    AssetsConstants.eyeIcon, // Ruta al archivo SVG del ojo
+                    color: _obscureText ? Pallete.greyColor : Pallete.blueColor,
+                  ),
+                ),
+              ),
+            ),
+            style: const TextStyle(color: Pallete.whiteColor),
+            inputFormatters: widget.maxLength != null
+                ? [LengthLimitingTextInputFormatter(widget.maxLength)]
+                : null,
+          ),
+        ),
+        Align(
+          alignment: Alignment.centerRight,
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 30),
+            child: Text(
+              '${_controller.text.length}/${widget.maxLength}',
+              style: const TextStyle(color: Pallete.greyColor),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
