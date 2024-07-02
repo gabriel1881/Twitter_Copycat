@@ -217,12 +217,10 @@ class _CustomTextFieldWithCounterState extends _CustomTextFieldState {
 
 class CustomPasswordField extends StatefulWidget {
   final String hintText;
-  final int? maxLength;
 
   const CustomPasswordField({
     super.key,
     required this.hintText,
-    this.maxLength,
   });
 
   @override
@@ -231,7 +229,7 @@ class CustomPasswordField extends StatefulWidget {
 
 class _CustomPasswordFieldState extends State<CustomPasswordField> {
   final TextEditingController _controller = TextEditingController();
-  bool _obscureText = true; // Estado para controlar la visibilidad del texto
+  bool _obscureText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -242,8 +240,7 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
           margin: const EdgeInsets.symmetric(horizontal: 30),
           child: TextField(
             controller: _controller,
-            maxLength: widget.maxLength,
-            obscureText: _obscureText, // Mostrar asteriscos o texto plano según el estado
+            obscureText: _obscureText,
             decoration: InputDecoration(
               hintText: widget.hintText,
               hintStyle: TextStyle(
@@ -259,22 +256,24 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
               suffixIcon: GestureDetector(
                 onTap: () {
                   setState(() {
-                    _obscureText = !_obscureText; // Alternar entre mostrar y ocultar texto
+                    _obscureText = !_obscureText;
                   });
                 },
                 child: Container(
                   padding: const EdgeInsets.all(12),
                   child: SvgPicture.asset(
-                    AssetsConstants.eyeIcon, // Ruta al archivo SVG del ojo
-                    color: _obscureText ? Pallete.greyColor : Pallete.blueColor,
+                    AssetsConstants.eyeIcon, 
+                    color: Pallete.greyColor,
+                    width: 20,
+                    height: 20,
                   ),
                 ),
               ),
             ),
             style: const TextStyle(color: Pallete.whiteColor),
-            inputFormatters: widget.maxLength != null
-                ? [LengthLimitingTextInputFormatter(widget.maxLength)]
-                : null,
+            onChanged: (value) {
+              setState(() {}); 
+            },
           ),
         ),
         Align(
@@ -282,8 +281,8 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 30),
             child: Text(
-              '${_controller.text.length}/${widget.maxLength}',
-              style: const TextStyle(color: Pallete.greyColor),
+              '•' * _controller.text.length,
+              style: const TextStyle(color: Pallete.whiteColor),
             ),
           ),
         ),

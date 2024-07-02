@@ -50,7 +50,7 @@ class XTwitterHeader extends TwitterHeader {
         const SizedBox(width: 14),
         GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, '/login'); // Navigation to login screen on X icon tap
+            Navigator.pushNamed(context, '/start'); // Navigation to login screen on X icon tap
           },
           child: ColorFiltered(
             colorFilter: const ColorFilter.mode(

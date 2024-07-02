@@ -22,9 +22,8 @@ class PasswordView extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
-            CustomTextField(
+            CustomPasswordField(
               hintText: 'Password',
-              maxLength: 20, // Opcional: Puedes definir la longitud máxima del texto
             ),
             SizedBox(height: 470),
             CustomBottomNavigationWithPass(
