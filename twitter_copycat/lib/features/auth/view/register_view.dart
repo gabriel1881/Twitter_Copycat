@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_copycat/features/auth/widgets/widgets.dart';
+import 'package:twitter_copycat/features/auth/widgets/bars.dart';
+import 'package:twitter_copycat/features/auth/widgets/misc.dart';
+import 'package:twitter_copycat/features/auth/widgets/texts.dart';
 
 class RegisterView extends StatefulWidget{
   const RegisterView({super.key});
