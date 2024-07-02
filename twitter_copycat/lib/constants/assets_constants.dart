@@ -19,4 +19,5 @@ class AssetsConstants {
   static const String googleIcon = '$_svgsPath/google.svg';
   static const String backIcon = '$_svgsPath/back_arrow.svg';
   static const String xIcon = '$_svgsPath/x.svg';
+  static const String eyeIcon = '$_svgsPath/eye.svg';
 }

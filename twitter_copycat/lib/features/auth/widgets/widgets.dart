@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:twitter_copycat/constants/assets_constants.dart';
 import 'package:twitter_copycat/theme/pallete.dart';
@@ -52,7 +53,7 @@ class XTwitterHeader extends TwitterHeader {
         const SizedBox(width: 14),
         GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, '/login_view'); // Navigation to login screen on X icon tap
+            Navigator.pushNamed(context, '/login'); // Navigation to login screen on X icon tap
           },
           child: ColorFiltered(
             colorFilter: const ColorFilter.mode(
@@ -97,7 +98,7 @@ class BackTwitterHeader extends TwitterHeader {
             ),
           ),
         ),
-        const SizedBox(width: 68), // 68 units spacing
+        const SizedBox(width: 68),
         super.build(context), // Calls build method of BirdBar to display Twitter icon
       ],
     );
@@ -150,7 +151,7 @@ class SmallText extends StatelessWidget {
               style: const TextStyle(color: Pallete.greyBlueColor),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
-                  launch('https://twitter.com/tos');
+                  launch('https://x.com/en/tos');
                 },
             ),
             const TextSpan(
@@ -161,7 +162,7 @@ class SmallText extends StatelessWidget {
               style: const TextStyle(color: Pallete.greyBlueColor),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
-                  launch('https://twitter.com/privacy');
+                  launch('https://x.com/en/privacy');
                 },
             ),
             const TextSpan(
@@ -172,7 +173,7 @@ class SmallText extends StatelessWidget {
               style: const TextStyle(color: Pallete.greyBlueColor),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
-                  launch('https://twitter.com/cookies');
+                  launch('https://help.x.com/en/rules-and-policies/x-cookies');
                 },
             ),
           ],
@@ -201,7 +202,7 @@ class LoginText extends StatelessWidget {
               style: const TextStyle(color: Pallete.greyBlueColor),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
-                  // Navigate to login screen
+                  Navigator.pushNamed(context, '/login');// Navigate to login screen
                 },
             ),
           ],
@@ -249,7 +250,7 @@ class CreateAccountButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        // Navigate to Create Account screen
+        Navigator.pushNamed(context, '/register');// Navigate to Create Account screen
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: Pallete.greyBlueColor,
@@ -279,6 +280,162 @@ class OrLine extends StatelessWidget {
             child: Text("or", style: TextStyle(color: Pallete.geryWhiteColor)),
           ),
           Expanded(child: Divider(color: Pallete.geryWhiteColor)),
+        ],
+      ),
+    );
+  }
+}
+
+class CustomTextField extends StatefulWidget {
+  final String hintText;
+  final int? maxLength;
+
+  const CustomTextField({
+    super.key,
+    required this.hintText,
+    this.maxLength,
+  });
+
+  @override
+  _CustomTextFieldState createState() => _CustomTextFieldState();
+}
+
+class _CustomTextFieldState extends State<CustomTextField> {
+  final TextEditingController _controller = TextEditingController();
+  bool _hasText = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(() {
+      setState(() {
+        _hasText = _controller.text.isNotEmpty;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 30),
+          child: TextField(
+            controller: _controller,
+            maxLength: widget.maxLength,
+            decoration: InputDecoration(
+              hintText: widget.hintText,
+              hintStyle: TextStyle(color: _hasText ? Colors.transparent : Pallete.greyColor),
+              enabledBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(color: Pallete.greyColor, width: 1.0),
+              ),
+              focusedBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(color: Pallete.blueColor, width: 1.0),
+              ),
+              counterText: '',
+            ),
+            style: const TextStyle(color: Pallete.whiteColor),
+            inputFormatters: widget.maxLength != null
+                ? [LengthLimitingTextInputFormatter(widget.maxLength)]
+                : null,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class CustomTextFieldWithCounter extends CustomTextField {
+  const CustomTextFieldWithCounter({
+    super.key,
+    required super.hintText,
+    required int super.maxLength,
+  });
+
+  @override
+  _CustomTextFieldWithCounterState createState() => _CustomTextFieldWithCounterState();
+}
+
+class _CustomTextFieldWithCounterState extends _CustomTextFieldState {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 30),
+          child: TextField(
+            controller: _controller,
+            maxLength: widget.maxLength,
+            decoration: InputDecoration(
+              hintText: widget.hintText,
+              hintStyle: TextStyle(color: _hasText ? Colors.transparent : Pallete.greyColor),
+              enabledBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(color: Pallete.greyColor, width: 1.0),
+              ),
+              focusedBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(color: Pallete.blueColor, width: 1.0),
+              ),
+              counterText: '',
+            ),
+            style: const TextStyle(color: Pallete.whiteColor),
+            inputFormatters: [LengthLimitingTextInputFormatter(widget.maxLength)],
+          ),
+        ),
+        Align(
+          alignment: Alignment.centerRight,
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 30),
+            child: Text(
+              '${_controller.text.length}/${widget.maxLength}',
+              style: const TextStyle(color: Pallete.greyColor),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class CustomBottomNavigation extends StatelessWidget {
+  final String nextPageRoute;
+
+  const CustomBottomNavigation({
+    super.key,
+    required this.nextPageRoute,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      decoration: const BoxDecoration(
+        color: Pallete.greyBackgroundColor,
+        border: Border(top: BorderSide(color: Pallete.greyColor)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, nextPageRoute);
+            },
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Pallete.greyBlueColor,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Text(
+                'Next',
+                style: TextStyle(
+                  color: Pallete.whiteColor,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

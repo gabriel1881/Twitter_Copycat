@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Pallete {
+  static const Color greyBackgroundColor = Color.fromARGB(20,20,20,1);
   static const Color backgroundColor = Colors.black;
   static const Color searchBarColor = Color.fromRGBO(32, 35, 39, 1);
   static const Color blueColor = Color.fromRGBO(30, 155, 238, 1);
