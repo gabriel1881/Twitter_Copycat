@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twitter_copycat/features/auth/view/home_view.dart';
 import 'package:twitter_copycat/features/auth/view/login_view.dart';
 import 'package:twitter_copycat/features/auth/view/start_view.dart';
 import 'package:twitter_copycat/features/auth/view/password_view.dart';
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Twitter Copycat',
-      theme: AppTheme.theme,
+      theme: NightTheme.theme,
       initialRoute: '/',
       routes: {
         '/': (context) => const StartView(), // Ruta inicial
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         '/usr': (context) => const UsrView(),
         '/pass': (context) => const PasswordView(),
         '/login': (context) => const LoginView(),
+        '/home' : (context) => const HomeView(),
       },
     );
   }

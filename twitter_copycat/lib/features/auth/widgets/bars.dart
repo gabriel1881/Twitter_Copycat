@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:twitter_copycat/constants/assets_constants.dart';
 import 'package:twitter_copycat/theme/pallete.dart';
+import 'package:twitter_copycat/theme/theme.dart';
 
 
 class TwitterHeader extends StatelessWidget {
@@ -97,6 +98,42 @@ class BackTwitterHeader extends TwitterHeader {
         ),
         const SizedBox(width: 68),
         super.build(context), // Calls build method of BirdBar to display Twitter icon
+      ],
+    );
+  }
+}
+
+class HomeTwitterHeader extends TwitterHeader {
+  const HomeTwitterHeader({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        // Hamburger icon on the left
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SvgPicture.asset(
+            AssetsConstants.hamburgerIcon,
+              width: 17,
+              height: 17,
+            color: Pallete.blueColor,
+          ),
+        ),
+        const Spacer(),
+        super.build(context), // Calls build method of TwitterHeader to display Twitter icon
+        const Spacer(),
+        const SizedBox(width: 76),
+        // Stars icon on the right
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SvgPicture.asset(
+            AssetsConstants.starsIcon,
+              width: 25,
+              height: 25,
+            color: Pallete.blueColor,
+          ),
+        ),
       ],
     );
   }
@@ -205,6 +242,84 @@ class CustomBottomNavigationWithPass extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class CustomBottomNavigationBar extends StatefulWidget {
+  const CustomBottomNavigationBar({Key? key}) : super(key: key);
+
+  @override
+  _CustomBottomNavigationBarState createState() =>
+      _CustomBottomNavigationBarState();
+}
+
+class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      currentIndex: _selectedIndex,
+      onTap: _onItemTapped,
+      selectedItemColor: theme.primaryColor, // Color azul para el ícono seleccionado
+      unselectedItemColor: Colors.grey, // Color gris para el ícono no seleccionado
+      backgroundColor: theme.scaffoldBackgroundColor, // Fondo blanco
+      items: [
+        BottomNavigationBarItem(
+          icon: SvgPicture.asset(
+            AssetsConstants.homeFilledIcon,
+            width: 24,
+            height: 24,
+            color: _selectedIndex == 0
+                ? theme.primaryColor // Color azul cuando seleccionado
+                : Colors.grey, // Gris cuando no seleccionado
+          ),
+          label: '',
+        ),
+        BottomNavigationBarItem(
+          icon: SvgPicture.asset(
+            AssetsConstants.searchIcon,
+            width: 24,
+            height: 24,
+            color: _selectedIndex == 1
+                ? theme.primaryColor // Color azul cuando seleccionado
+                : Colors.grey, // Gris cuando no seleccionado
+          ),
+          label: '',
+        ),
+        BottomNavigationBarItem(
+          icon: SvgPicture.asset(
+            AssetsConstants.notifOutlinedIcon,
+            width: 24,
+            height: 24,
+            color: _selectedIndex == 2
+                ? theme.primaryColor // Color azul cuando seleccionado
+                : Colors.grey, // Gris cuando no seleccionado
+          ),
+          label: '',
+        ),
+        BottomNavigationBarItem(
+          icon: SvgPicture.asset(
+            AssetsConstants.mailIcon,
+            width: 24,
+            height: 24,
+            color: _selectedIndex == 3
+                ? theme.primaryColor // Color azul cuando seleccionado
+                : Colors.grey, // Gris cuando no seleccionado
+          ),
+          label: '',
+        ),
+      ],
     );
   }
 }

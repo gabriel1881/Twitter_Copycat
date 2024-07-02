@@ -31,7 +31,7 @@ class LoginView extends StatelessWidget {
             ),
             SizedBox(height: 400),
             CustomBottomNavigationWithPass(
-              nextPageRoute: '/login',
+              nextPageRoute: '/home',
             ),
           ],
         ),

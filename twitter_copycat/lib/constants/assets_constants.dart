@@ -15,9 +15,11 @@ class AssetsConstants {
   static const String likeFilledIcon = '$_svgsPath/like_filled.svg';
   static const String viewsIcon = '$_svgsPath/views.svg';
   static const String verifiedIcon = '$_svgsPath/verified.svg';
-  static const String starsIcon = '$_svgsPath/stars.svg';
   static const String googleIcon = '$_svgsPath/google.svg';
   static const String backIcon = '$_svgsPath/back_arrow.svg';
   static const String xIcon = '$_svgsPath/x.svg';
   static const String eyeIcon = '$_svgsPath/eye.svg';
+  static const String hamburgerIcon = '$_svgsPath/hamburger.svg';
+  static const String starsIcon = '$_svgsPath/stars.svg';
+  static const String mailIcon = '$_svgsPath/mail.svg';
 }
