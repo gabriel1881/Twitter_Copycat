@@ -3,7 +3,7 @@ import 'package:twitter_copycat/features/auth/widgets/bars.dart';
 import 'package:twitter_copycat/theme/theme.dart';
 
 class HomeView extends StatelessWidget {
-  const HomeView({Key? key}) : super(key: key);
+  const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class HomeView extends StatelessWidget {
           automaticallyImplyLeading: false,
           title: const HomeTwitterHeader(),
         ),
-        body: Center(
+        body: const Center(
           child: Text('Home Screen Content Here'),
         ),
         bottomNavigationBar: Theme(

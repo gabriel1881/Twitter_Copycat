@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:twitter_copycat/features/auth/controller/user_data_handler.dart';
 import 'package:twitter_copycat/features/auth/widgets/bars.dart';
 import 'package:twitter_copycat/features/auth/widgets/misc.dart';
 import 'package:twitter_copycat/features/auth/widgets/texts.dart';
 
-class RegisterView extends StatefulWidget{
+class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
 
   @override
@@ -11,44 +12,59 @@ class RegisterView extends StatefulWidget{
 }
 
 class _RegisterViewState extends State<RegisterView> {
-  @override 
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailPhoneController = TextEditingController();
+  final TextEditingController _dobController = TextEditingController();
+
+  void _nextPage() {
+    setState(() {
+      userData.name = _nameController.text;
+      userData.email = _emailPhoneController.text.contains('@') ? _emailPhoneController.text : null;
+      userData.phone = RegExp(r'^[0-9]+$').hasMatch(_emailPhoneController.text) ? _emailPhoneController.text : null;
+      userData.dateOfBirth = _dobController.text;
+    });
+
+    Navigator.pushNamed(context, '/usr');
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      // The main body of the registration view
+    return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            // The Header
-            BackTwitterHeader(),
-            Space(height: 30),
-            Align(
+            const BackTwitterHeader(),
+            const Space(height: 30),
+            const Align(
               alignment: Alignment.centerLeft,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 2),
                 child: LargeText(text: "Create your account"),
               ),
             ),
-            Space(height: 200),
+            const Space(height: 200),
             CustomTextFieldWithCounter(
               hintText: 'Name',
               maxLength: 50,
+              controller: _nameController,
             ),
-            Space(height: 20),
+            const Space(height: 20),
             CustomTextField(
               hintText: 'Phone number or email address',
+              controller: _emailPhoneController,
             ),
-            Space(height: 20),
+            const Space(height: 20),
             CustomTextField(
               hintText: 'Date of birth         DD/MM/YYYY',
+              controller: _dobController,
             ),
-            Space(height: 50),
+            const Space(height: 50),
           ],
         ),
       ),
-      // Bottom nav bar
-      bottomNavigationBar: CustomBottomNavigation(
-        nextPageRoute: '/usr', 
+      bottomNavigationBar: const CustomBottomNavigation(
+        nextPageRoute: '/usr',
       ),
     );
   }

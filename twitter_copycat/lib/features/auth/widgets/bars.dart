@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:twitter_copycat/constants/assets_constants.dart';
+import 'package:twitter_copycat/features/auth/controller/user_data_handler.dart';
 import 'package:twitter_copycat/theme/pallete.dart';
 import 'package:twitter_copycat/theme/theme.dart';
 
@@ -247,7 +248,7 @@ class CustomBottomNavigationWithPass extends StatelessWidget {
 }
 
 class CustomBottomNavigationBar extends StatefulWidget {
-  const CustomBottomNavigationBar({Key? key}) : super(key: key);
+  const CustomBottomNavigationBar({super.key});
 
   @override
   _CustomBottomNavigationBarState createState() =>
@@ -271,9 +272,9 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
       type: BottomNavigationBarType.fixed,
       currentIndex: _selectedIndex,
       onTap: _onItemTapped,
-      selectedItemColor: theme.primaryColor, // Color azul para el ícono seleccionado
-      unselectedItemColor: Colors.grey, // Color gris para el ícono no seleccionado
-      backgroundColor: theme.scaffoldBackgroundColor, // Fondo blanco
+      selectedItemColor: theme.primaryColor, 
+      unselectedItemColor: Colors.grey, 
+      backgroundColor: theme.scaffoldBackgroundColor, 
       items: [
         BottomNavigationBarItem(
           icon: SvgPicture.asset(
@@ -281,8 +282,8 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
             width: 24,
             height: 24,
             color: _selectedIndex == 0
-                ? theme.primaryColor // Color azul cuando seleccionado
-                : Colors.grey, // Gris cuando no seleccionado
+                ? theme.primaryColor 
+                : Colors.grey, 
           ),
           label: '',
         ),
@@ -292,8 +293,8 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
             width: 24,
             height: 24,
             color: _selectedIndex == 1
-                ? theme.primaryColor // Color azul cuando seleccionado
-                : Colors.grey, // Gris cuando no seleccionado
+                ? theme.primaryColor 
+                : Colors.grey, 
           ),
           label: '',
         ),
@@ -303,23 +304,129 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
             width: 24,
             height: 24,
             color: _selectedIndex == 2
-                ? theme.primaryColor // Color azul cuando seleccionado
-                : Colors.grey, // Gris cuando no seleccionado
+                ? theme.primaryColor 
+                : Colors.grey, 
           ),
           label: '',
         ),
         BottomNavigationBarItem(
           icon: SvgPicture.asset(
             AssetsConstants.mailIcon,
-            width: 24,
-            height: 24,
+            width: 27,
+            height: 27,
             color: _selectedIndex == 3
-                ? theme.primaryColor // Color azul cuando seleccionado
-                : Colors.grey, // Gris cuando no seleccionado
+                ? theme.primaryColor 
+                : Colors.grey, 
           ),
           label: '',
         ),
       ],
+    );
+  }
+}
+
+class CustomBottomNavigationLogin extends StatelessWidget {
+  final String nextPageRoute;
+  final UserData userData;
+  final Future<String> Function(String, String, String) createUser;
+  final bool enableCreateFunctionality;
+
+  const CustomBottomNavigationLogin({
+    super.key,
+    required this.nextPageRoute,
+    required this.userData,
+    required this.createUser,
+    this.enableCreateFunctionality = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      decoration: const BoxDecoration(
+        color: Pallete.greyBackgroundColor,
+        border: Border(top: BorderSide(color: Pallete.greyColor)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, '/forgot_password');
+            },
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Text(
+                'Forgot password?',
+                style: TextStyle(
+                  color: Pallete.blueColor,
+                  fontSize: 14,
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () async {
+              if (enableCreateFunctionality) {
+                print('User Data: Name: ${userData.name}, Email: ${userData.email}, Phone: ${userData.phone}, Username: ${userData.username}, Password: ${userData.password}');
+                
+                if (userData.name != null && userData.email != null && userData.password != null) {
+                  final result = await createUser(
+                    userData.name!,
+                    userData.email!,
+                    userData.password!,
+                  );
+                  if (result == "success") {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: const Text(
+                        "Account Created Successfully",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      backgroundColor: Colors.green.shade400,
+                    ));
+                    Navigator.pushReplacementNamed(context, "/home");
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                        result,
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                      backgroundColor: Colors.red.shade400,
+                    ));
+                  }
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: const Text(
+                      "Missing user data",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    backgroundColor: Colors.red.shade400,
+                  ));
+                }
+              } else {
+                Navigator.pushNamed(context, nextPageRoute);
+              }
+            },
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Pallete.greyBlueColor,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: const Text(
+                'Login',
+                style: TextStyle(
+                  color: Pallete.whiteColor,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

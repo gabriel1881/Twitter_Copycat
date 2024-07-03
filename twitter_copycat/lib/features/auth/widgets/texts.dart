@@ -106,11 +106,13 @@ class LoginText extends StatelessWidget {
 class CustomTextField extends StatefulWidget {
   final String hintText;
   final int? maxLength;
+  final TextEditingController? controller; // Añadir el controlador
 
   const CustomTextField({
     super.key,
     required this.hintText,
     this.maxLength,
+    this.controller, // Añadir el controlador
   });
 
   @override
@@ -118,18 +120,28 @@ class CustomTextField extends StatefulWidget {
 }
 
 class _CustomTextFieldState extends State<CustomTextField> {
-  final TextEditingController _controller = TextEditingController();
-  bool _hasText = false;
+  late final TextEditingController _controller;
 
   @override
   void initState() {
     super.initState();
+    _controller = widget.controller ?? TextEditingController();
     _controller.addListener(() {
       setState(() {
         _hasText = _controller.text.isNotEmpty;
       });
     });
   }
+
+  @override
+  void dispose() {
+    if (widget.controller == null) {
+      _controller.dispose();
+    }
+    super.dispose();
+  }
+
+  bool _hasText = false;
 
   @override
   Widget build(BuildContext context) {
@@ -168,7 +180,8 @@ class CustomTextFieldWithCounter extends CustomTextField {
     super.key,
     required super.hintText,
     required int super.maxLength,
-  });
+    super.controller, // Añadir el controlador
+  }); // Pasar el controlador
 
   @override
   _CustomTextFieldWithCounterState createState() => _CustomTextFieldWithCounterState();
@@ -217,10 +230,12 @@ class _CustomTextFieldWithCounterState extends _CustomTextFieldState {
 
 class CustomPasswordField extends StatefulWidget {
   final String hintText;
+  final TextEditingController? controller; // Añadir el controlador
 
   const CustomPasswordField({
     super.key,
     required this.hintText,
+    this.controller, // Añadir el controlador
   });
 
   @override
@@ -228,7 +243,27 @@ class CustomPasswordField extends StatefulWidget {
 }
 
 class _CustomPasswordFieldState extends State<CustomPasswordField> {
-  final TextEditingController _controller = TextEditingController();
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = widget.controller ?? TextEditingController();
+    _controller.addListener(() {
+      setState(() {
+        // Solo para actualizar la UI cuando se cambie el texto
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    if (widget.controller == null) {
+      _controller.dispose();
+    }
+    super.dispose();
+  }
+
   bool _obscureText = true;
 
   @override
@@ -262,7 +297,7 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
                 child: Container(
                   padding: const EdgeInsets.all(12),
                   child: SvgPicture.asset(
-                    AssetsConstants.eyeIcon, 
+                    AssetsConstants.eyeIcon,
                     color: Pallete.greyColor,
                     width: 20,
                     height: 20,
@@ -271,9 +306,6 @@ class _CustomPasswordFieldState extends State<CustomPasswordField> {
               ),
             ),
             style: const TextStyle(color: Pallete.whiteColor),
-            onChanged: (value) {
-              setState(() {}); 
-            },
           ),
         ),
         Align(
