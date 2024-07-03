@@ -18,13 +18,17 @@ class _UsrViewState extends State<UsrView> {
       final text = _controller.text;
       if (RegExp(r'^[0-9]+$').hasMatch(text)) {
         userData.phone = text;
-      } else if (text.contains('@')) {
+      } else if (text.contains('.com')) {
         userData.email = text;
       } else {
         userData.username = text;
       }
     });
 
+    print('User name: ${userData.name}');
+    print('User email: ${userData.email}');
+    print('User birth: ${userData.dateOfBirth}');
+    print('User user: ${userData.username}');
     Navigator.pushNamed(context, '/pass');
   }
 
@@ -53,8 +57,9 @@ class _UsrViewState extends State<UsrView> {
           ],
         ),
       ),
-      bottomNavigationBar: const CustomBottomNavigationWithPass(
+      bottomNavigationBar: CustomBottomNavigationWithPass(
         nextPageRoute: '/pass',
+        onTap: _nextPage,
       ),
     );
   }

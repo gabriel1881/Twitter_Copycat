@@ -4,6 +4,7 @@ import 'package:twitter_copycat/constants/assets_constants.dart';
 import 'package:twitter_copycat/features/auth/controller/user_data_handler.dart';
 import 'package:twitter_copycat/theme/pallete.dart';
 import 'package:twitter_copycat/theme/theme.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class TwitterHeader extends StatelessWidget {
@@ -142,10 +143,12 @@ class HomeTwitterHeader extends TwitterHeader {
 
 class CustomBottomNavigation extends StatelessWidget {
   final String nextPageRoute;
+  final VoidCallback? onTap;
 
   const CustomBottomNavigation({
     super.key,
     required this.nextPageRoute,
+    this.onTap,
   });
 
   @override
@@ -160,7 +163,7 @@ class CustomBottomNavigation extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           GestureDetector(
-            onTap: () {
+            onTap: onTap ?? () {
               Navigator.pushNamed(context, nextPageRoute);
             },
             child: Container(
@@ -186,10 +189,12 @@ class CustomBottomNavigation extends StatelessWidget {
 
 class CustomBottomNavigationWithPass extends StatelessWidget {
   final String nextPageRoute;
+  final VoidCallback? onTap;
 
   const CustomBottomNavigationWithPass({
     super.key,
     required this.nextPageRoute,
+    this.onTap,
   });
 
   @override
@@ -205,8 +210,7 @@ class CustomBottomNavigationWithPass extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              // Navigate to Forgot Password screen (to be implemented)
-              Navigator.pushNamed(context, '/forgot_password');
+              launch('https://help.x.com/en/forms/account-access/regain-access/forgot-password');
             },
             child: Container(
               padding: const EdgeInsets.all(10),
@@ -217,13 +221,13 @@ class CustomBottomNavigationWithPass extends StatelessWidget {
                 'Forgot password?',
                 style: TextStyle(
                   color: Pallete.blueColor,
-                  fontSize: 14, // Tamaño de texto ajustado
+                  fontSize: 14,
                 ),
               ),
             ),
           ),
           GestureDetector(
-            onTap: () {
+            onTap: onTap ?? () {
               Navigator.pushNamed(context, nextPageRoute);
             },
             child: Container(
@@ -327,16 +331,16 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
 
 class CustomBottomNavigationLogin extends StatelessWidget {
   final String nextPageRoute;
-  final UserData userData;
   final Future<String> Function(String, String, String) createUser;
   final bool enableCreateFunctionality;
+  final TextEditingController passwordController;
 
   const CustomBottomNavigationLogin({
     super.key,
     required this.nextPageRoute,
-    required this.userData,
     required this.createUser,
     this.enableCreateFunctionality = false,
+    required this.passwordController,
   });
 
   @override
@@ -352,75 +356,55 @@ class CustomBottomNavigationLogin extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context, '/forgot_password');
+              launch('https://help.x.com/en/forms/account-access/regain-access/forgot-password');
             },
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: const Text(
-                'Forgot password?',
-                style: TextStyle(
-                  color: Pallete.blueColor,
-                  fontSize: 14,
-                ),
+            child: const Text(
+              'Forgot password?',
+              style: TextStyle(
+                color: Pallete.blueColor,
               ),
             ),
           ),
           GestureDetector(
             onTap: () async {
+              // Verificar y crear usuario
+              String password = passwordController.text;
               if (enableCreateFunctionality) {
-                print('User Data: Name: ${userData.name}, Email: ${userData.email}, Phone: ${userData.phone}, Username: ${userData.username}, Password: ${userData.password}');
-                
-                if (userData.name != null && userData.email != null && userData.password != null) {
-                  final result = await createUser(
-                    userData.name!,
-                    userData.email!,
-                    userData.password!,
-                  );
-                  if (result == "success") {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: const Text(
-                        "Account Created Successfully",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      backgroundColor: Colors.green.shade400,
-                    ));
-                    Navigator.pushReplacementNamed(context, "/home");
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text(
-                        result,
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                      backgroundColor: Colors.red.shade400,
-                    ));
-                  }
+                String result = await createUser(
+                  userData.username ?? '',
+                  userData.email ?? '',
+                  password,
+                );
+                print("Registration Result: $result");
+                if (result == "success") {
+                  Navigator.pushNamed(context, '/login');
                 } else {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: const Text(
-                      "Missing user data",
-                      style: TextStyle(color: Colors.white),
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(result),
+                      backgroundColor: Colors.red,
                     ),
-                    backgroundColor: Colors.red.shade400,
-                  ));
+                  );
                 }
               } else {
-                Navigator.pushNamed(context, nextPageRoute);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("User data is incomplete."),
+                    backgroundColor: Colors.red,
+                  ),
+                );
               }
             },
             child: Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Pallete.greyBlueColor,
                 borderRadius: BorderRadius.circular(20),
+                color: Pallete.blueColor,
               ),
               child: const Text(
-                'Login',
+                'Log in',
                 style: TextStyle(
                   color: Pallete.whiteColor,
-                  fontSize: 16,
                 ),
               ),
             ),

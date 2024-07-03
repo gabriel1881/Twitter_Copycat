@@ -1,19 +1,15 @@
 class UserData {
   String? name;
   String? email;
-  String? password;
   String? phone;
   String? username;
   String? dateOfBirth;
+  String? password;
 
-  UserData({
-    this.name,
-    this.email,
-    this.password,
-    this.phone,
-    this.username,
-    this.dateOfBirth,
-  });
+  @override
+  String toString() {
+    return 'UserData{name: $name, email: $email, phone: $phone, username: $username, dateOfBirth: $dateOfBirth, password: $password}';
+  }
 }
 
-UserData userData = UserData();
+final userData = UserData();

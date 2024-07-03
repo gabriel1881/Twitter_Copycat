@@ -21,26 +21,26 @@ class _LoginViewState extends State<LoginView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            XTwitterHeader(),
-            SizedBox(height: 30),
-            Align(
+            const XTwitterHeader(),
+            const SizedBox(height: 30),
+            const Align(
               alignment: Alignment.centerLeft,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 26),
                 child: LargeText(text: "Login in to Twitter"),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             CustomTextField(
               hintText: 'Phone, email, or username',
               controller: _usernameController,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             CustomPasswordField(
               hintText: 'Password',
               controller: _passwordController,
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             GestureDetector(
               onTap: () {
                 // Lógica para iniciar sesión
@@ -55,7 +55,7 @@ class _LoginViewState extends State<LoginView> {
                       SnackBar(
                         content: Text(
                           "Login failed: $result",
-                          style: TextStyle(color: Colors.white),
+                          style: const TextStyle(color: Colors.white),
                         ),
                         backgroundColor: Colors.red.shade400,
                       ),
@@ -63,7 +63,7 @@ class _LoginViewState extends State<LoginView> {
                   }
                 });
               },
-              child: CustomBottomNavigationWithPass(
+              child: const CustomBottomNavigationWithPass(
                 nextPageRoute: '/home',
               ),
             ),

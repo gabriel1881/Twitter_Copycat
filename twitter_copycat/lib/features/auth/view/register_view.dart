@@ -24,6 +24,10 @@ class _RegisterViewState extends State<RegisterView> {
       userData.dateOfBirth = _dobController.text;
     });
 
+    // Print the user's name to check if it's saved correctly
+    print('User name: ${userData.name}');
+    print('User email: ${userData.email}');
+    print('User birth: ${userData.dateOfBirth}');
     Navigator.pushNamed(context, '/usr');
   }
 
@@ -39,7 +43,7 @@ class _RegisterViewState extends State<RegisterView> {
             const Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 2),
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 child: LargeText(text: "Create your account"),
               ),
             ),
@@ -63,8 +67,9 @@ class _RegisterViewState extends State<RegisterView> {
           ],
         ),
       ),
-      bottomNavigationBar: const CustomBottomNavigation(
+      bottomNavigationBar: CustomBottomNavigation(
         nextPageRoute: '/usr',
+        onTap: _nextPage,
       ),
     );
   }

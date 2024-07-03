@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_copycat/features/auth/controller/auth.dart';
-import 'package:twitter_copycat/features/auth/controller/user_data_handler.dart';
 import 'package:twitter_copycat/features/auth/widgets/bars.dart';
+import 'package:twitter_copycat/features/auth/widgets/misc.dart';
 import 'package:twitter_copycat/features/auth/widgets/texts.dart';
 
 class PasswordView extends StatefulWidget {
@@ -12,14 +12,7 @@ class PasswordView extends StatefulWidget {
 }
 
 class _PasswordViewState extends State<PasswordView> {
-  final TextEditingController _controller = TextEditingController();
-
-  void _nextPage() {
-    setState(() {
-      userData.password = _controller.text;
-    });
-    Navigator.pushNamed(context, '/login');
-  }
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -28,29 +21,29 @@ class _PasswordViewState extends State<PasswordView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const XTwitterHeader(),
-            const SizedBox(height: 30),
+            const BackTwitterHeader(),
+            const Space(height: 30),
             const Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 26),
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 child: LargeText(text: "Enter your password"),
               ),
             ),
-            const SizedBox(height: 20),
+            const Space(height: 20),
             CustomPasswordField(
               hintText: 'Password',
-              controller: _controller,
+              controller: _passwordController,
             ),
-            const SizedBox(height: 470),
+            const Space(height: 50),
+            CustomBottomNavigationLogin(
+              nextPageRoute: '/login',
+              createUser: createEmailUser,
+              enableCreateFunctionality: true,
+              passwordController: _passwordController,
+            ),
           ],
         ),
-      ),
-      bottomNavigationBar: CustomBottomNavigationLogin(
-        nextPageRoute: '/login',
-        userData: userData,
-        createUser: createEmailUser,
-        enableCreateFunctionality: true,
       ),
     );
   }
