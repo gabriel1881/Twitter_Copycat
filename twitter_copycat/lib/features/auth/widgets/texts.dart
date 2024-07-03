@@ -18,7 +18,7 @@ class LargeText extends StatelessWidget {
       child: Text(
         text,
         textAlign: TextAlign.left,
-        style: const TextStyle(fontSize: 28, color: Pallete.whiteColor),
+        style: const TextStyle(fontSize: 25.3, color: Pallete.whiteColor),
       ),
     );
   }
@@ -106,13 +106,13 @@ class LoginText extends StatelessWidget {
 class CustomTextField extends StatefulWidget {
   final String hintText;
   final int? maxLength;
-  final TextEditingController? controller; // Añadir el controlador
+  final TextEditingController? controller; 
 
   const CustomTextField({
     super.key,
     required this.hintText,
     this.maxLength,
-    this.controller, // Añadir el controlador
+    this.controller, 
   });
 
   @override
@@ -230,12 +230,12 @@ class _CustomTextFieldWithCounterState extends _CustomTextFieldState {
 
 class CustomPasswordField extends StatefulWidget {
   final String hintText;
-  final TextEditingController? controller; // Añadir el controlador
+  final TextEditingController? controller; 
 
   const CustomPasswordField({
     super.key,
     required this.hintText,
-    this.controller, // Añadir el controlador
+    this.controller,
   });
 
   @override

@@ -141,11 +141,11 @@ class HomeTwitterHeader extends TwitterHeader {
   }
 }
 
-class CustomBottomNavigation extends StatelessWidget {
+class RegisterNavBar extends StatelessWidget {
   final String nextPageRoute;
   final VoidCallback? onTap;
 
-  const CustomBottomNavigation({
+  const RegisterNavBar({
     super.key,
     required this.nextPageRoute,
     this.onTap,
@@ -187,11 +187,11 @@ class CustomBottomNavigation extends StatelessWidget {
   }
 }
 
-class CustomBottomNavigationWithPass extends StatelessWidget {
+class UsrNavBar extends StatelessWidget {
   final String nextPageRoute;
   final VoidCallback? onTap;
 
-  const CustomBottomNavigationWithPass({
+  const UsrNavBar({
     super.key,
     required this.nextPageRoute,
     this.onTap,
@@ -251,15 +251,14 @@ class CustomBottomNavigationWithPass extends StatelessWidget {
   }
 }
 
-class CustomBottomNavigationBar extends StatefulWidget {
-  const CustomBottomNavigationBar({super.key});
+class HomeNavBar extends StatefulWidget {
+  const HomeNavBar({super.key});
 
   @override
-  _CustomBottomNavigationBarState createState() =>
-      _CustomBottomNavigationBarState();
+  _HomeNavBarState createState() => _HomeNavBarState();
 }
 
-class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
+class _HomeNavBarState extends State<HomeNavBar> {
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -276,18 +275,16 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
       type: BottomNavigationBarType.fixed,
       currentIndex: _selectedIndex,
       onTap: _onItemTapped,
-      selectedItemColor: theme.primaryColor, 
-      unselectedItemColor: Colors.grey, 
-      backgroundColor: theme.scaffoldBackgroundColor, 
+      selectedItemColor: theme.primaryColor,
+      unselectedItemColor: Colors.grey,
+      backgroundColor: theme.scaffoldBackgroundColor,
       items: [
         BottomNavigationBarItem(
           icon: SvgPicture.asset(
             AssetsConstants.homeFilledIcon,
             width: 24,
             height: 24,
-            color: _selectedIndex == 0
-                ? theme.primaryColor 
-                : Colors.grey, 
+            color: _selectedIndex == 0 ? theme.primaryColor : Colors.grey,
           ),
           label: '',
         ),
@@ -296,9 +293,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
             AssetsConstants.searchIcon,
             width: 24,
             height: 24,
-            color: _selectedIndex == 1
-                ? theme.primaryColor 
-                : Colors.grey, 
+            color: _selectedIndex == 1 ? theme.primaryColor : Colors.grey,
           ),
           label: '',
         ),
@@ -307,9 +302,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
             AssetsConstants.notifOutlinedIcon,
             width: 24,
             height: 24,
-            color: _selectedIndex == 2
-                ? theme.primaryColor 
-                : Colors.grey, 
+            color: _selectedIndex == 2 ? theme.primaryColor : Colors.grey,
           ),
           label: '',
         ),
@@ -318,9 +311,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
             AssetsConstants.mailIcon,
             width: 27,
             height: 27,
-            color: _selectedIndex == 3
-                ? theme.primaryColor 
-                : Colors.grey, 
+            color: _selectedIndex == 3 ? theme.primaryColor : Colors.grey,
           ),
           label: '',
         ),
@@ -329,13 +320,13 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   }
 }
 
-class CustomBottomNavigationLogin extends StatelessWidget {
+class PassNavBar extends StatelessWidget {
   final String nextPageRoute;
   final Future<String> Function(String, String, String) createUser;
   final bool enableCreateFunctionality;
   final TextEditingController passwordController;
 
-  const CustomBottomNavigationLogin({
+  const PassNavBar({
     super.key,
     required this.nextPageRoute,
     required this.createUser,
@@ -371,7 +362,7 @@ class CustomBottomNavigationLogin extends StatelessWidget {
               String password = passwordController.text;
               if (enableCreateFunctionality) {
                 String result = await createUser(
-                  userData.username ?? '',
+                  userData.name ?? '',
                   userData.email ?? '',
                   password,
                 );

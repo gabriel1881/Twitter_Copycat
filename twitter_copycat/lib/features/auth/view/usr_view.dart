@@ -35,29 +35,29 @@ class _UsrViewState extends State<UsrView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const XTwitterHeader(),
-            const SizedBox(height: 30),
-            const Align(
+      body: Column(
+        children: <Widget>[
+          SizedBox(height: MediaQuery.of(context).padding.top + 10), 
+          const XTwitterHeader(),
+          const SizedBox(height: 30),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 0), 
+            child: Align(
               alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 26),
-                child: LargeText(text: "To get started, first enter your phone, email, or @username"),
+              child: LargeText(
+                text: "To get started, first enter your phone, email, or @username",
               ),
             ),
-            const SizedBox(height: 20),
-            CustomTextField(
-              hintText: 'Phone, email, or username',
-              controller: _controller,
-            ),
-            const SizedBox(height: 400),
-          ],
-        ),
+          ),
+          const SizedBox(height: 20),
+          CustomTextField(
+            hintText: 'Phone, email, or username',
+            controller: _controller,
+          ),
+          const Expanded(child: SizedBox()), 
+        ],
       ),
-      bottomNavigationBar: CustomBottomNavigationWithPass(
+      bottomNavigationBar: UsrNavBar(
         nextPageRoute: '/pass',
         onTap: _nextPage,
       ),

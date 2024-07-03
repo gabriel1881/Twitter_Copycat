@@ -20,7 +20,7 @@ class HomeView extends StatelessWidget {
         bottomNavigationBar: Theme(
           data: LightTheme.theme.copyWith(
           ),
-          child: const CustomBottomNavigationBar(),
+          child: const HomeNavBar(),
         ),
       ),
     );

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twitter_copycat/features/auth/controller/user_data_handler.dart';
 import 'package:twitter_copycat/features/auth/widgets/bars.dart';
-import 'package:twitter_copycat/features/auth/widgets/misc.dart';
 import 'package:twitter_copycat/features/auth/widgets/texts.dart';
 
 class RegisterView extends StatefulWidget {
@@ -19,8 +18,11 @@ class _RegisterViewState extends State<RegisterView> {
   void _nextPage() {
     setState(() {
       userData.name = _nameController.text;
-      userData.email = _emailPhoneController.text.contains('@') ? _emailPhoneController.text : null;
-      userData.phone = RegExp(r'^[0-9]+$').hasMatch(_emailPhoneController.text) ? _emailPhoneController.text : null;
+      userData.email =
+          _emailPhoneController.text.contains('@') ? _emailPhoneController.text : null;
+      userData.phone = RegExp(r'^[0-9]+$').hasMatch(_emailPhoneController.text)
+          ? _emailPhoneController.text
+          : null;
       userData.dateOfBirth = _dobController.text;
     });
 
@@ -34,40 +36,51 @@ class _RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const BackTwitterHeader(),
-            const Space(height: 30),
-            const Align(
-              alignment: Alignment.centerLeft,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(height: MediaQuery.of(context).padding.top + 10), 
+          const BackTwitterHeader(),
+          const SizedBox(height: 20), // Espacio arriba del título
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: LargeText(text: "Create your account"),
+          ),
+          const SizedBox(height: 115), 
+ 
+          Expanded(
+            child: SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
-                child: LargeText(text: "Create your account"),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const SizedBox(height: 20), 
+                    CustomTextFieldWithCounter(
+                      hintText: 'Name',
+                      maxLength: 50,
+                      controller: _nameController,
+                    ),
+                    const SizedBox(height: 20), 
+                    CustomTextField(
+                      hintText: 'Phone number or email address',
+                      controller: _emailPhoneController,
+                    ),
+                    const SizedBox(height: 20), 
+                    CustomTextField(
+                      hintText: 'Date of birth         DD/MM/YYYY',
+                      controller: _dobController,
+                    ),
+                    const SizedBox(height: 20), 
+                  ],
+                ),
               ),
             ),
-            const Space(height: 200),
-            CustomTextFieldWithCounter(
-              hintText: 'Name',
-              maxLength: 50,
-              controller: _nameController,
-            ),
-            const Space(height: 20),
-            CustomTextField(
-              hintText: 'Phone number or email address',
-              controller: _emailPhoneController,
-            ),
-            const Space(height: 20),
-            CustomTextField(
-              hintText: 'Date of birth         DD/MM/YYYY',
-              controller: _dobController,
-            ),
-            const Space(height: 50),
-          ],
-        ),
+          ),
+          const SizedBox(height: 50), 
+        ],
       ),
-      bottomNavigationBar: CustomBottomNavigation(
+      bottomNavigationBar: RegisterNavBar(
         nextPageRoute: '/usr',
         onTap: _nextPage,
       ),

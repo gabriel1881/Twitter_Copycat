@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: NightTheme.theme,
       initialRoute: '/',
       routes: {
-        '/': (context) => const StartView(), // Ruta inicial
+        '/': (context) => const StartView(), 
         '/start': (context) => const StartView(),
         '/register': (context) => const RegisterView(),
         '/usr': (context) => const UsrView(),
