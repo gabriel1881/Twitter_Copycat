@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
         '/pass': (context) => const PasswordView(),
         '/login': (context) => const LoginView(),
         '/home' : (context) => const HomeView(),
+      //  '/tweet' : (context) => const CreateTweetView(),
       },
     );
   }

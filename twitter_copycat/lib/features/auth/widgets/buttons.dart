@@ -57,3 +57,21 @@ class CreateAccountButton extends StatelessWidget {
   }
 }
 
+class FeatherButton extends StatelessWidget {
+  const FeatherButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        Navigator.pushNamed(context, '/tweet');
+      },
+      icon: SvgPicture.asset(
+        AssetsConstants.featherIcon,
+        width: 45,
+        height: 45,
+        color: Pallete.blueColor, // Color del tema (enfoque en el color de acento)
+      ),
+    );
+  }
+}

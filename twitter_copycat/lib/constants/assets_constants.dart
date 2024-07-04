@@ -22,4 +22,6 @@ class AssetsConstants {
   static const String hamburgerIcon = '$_svgsPath/hamburger.svg';
   static const String starsIcon = '$_svgsPath/stars.svg';
   static const String mailIcon = '$_svgsPath/mail.svg';
+  static const String featherIcon = '$_svgsPath/feather.svg';
+  static const String userIcon = '$_svgsPath/user.svg';
 }

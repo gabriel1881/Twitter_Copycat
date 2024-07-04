@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:twitter_copycat/constants/assets_constants.dart';
+import 'package:twitter_copycat/features/auth/controller/auth.dart';
 import 'package:twitter_copycat/features/auth/controller/user_data_handler.dart';
 import 'package:twitter_copycat/theme/pallete.dart';
 import 'package:twitter_copycat/theme/theme.dart';
@@ -384,6 +385,94 @@ class PassNavBar extends StatelessWidget {
                     backgroundColor: Colors.red,
                   ),
                 );
+              }
+            },
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Pallete.blueColor,
+              ),
+              child: const Text(
+                'Log in',
+                style: TextStyle(
+                  color: Pallete.whiteColor,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class LoginNavBar extends StatelessWidget {
+  final GlobalKey<FormState> formKey;
+  final TextEditingController usernameController;
+  final TextEditingController passwordController;
+
+  const LoginNavBar({
+    required this.formKey,
+    required this.usernameController,
+    required this.passwordController,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      decoration: const BoxDecoration(
+        color: Pallete.greyBackgroundColor,
+        border: Border(top: BorderSide(color: Pallete.greyColor)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          GestureDetector(
+            onTap: () {
+              launch('https://help.x.com/en/forms/account-access/regain-access/forgot-password');
+            },
+            child: const Text(
+              'Forgot password?',
+              style: TextStyle(
+                color: Pallete.blueColor,
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              if (formKey.currentState!.validate()) {
+                // Clear previous user data
+                userData.name = null;
+                userData.email = null;
+                userData.phone = null;
+                userData.username = null;
+                userData.dateOfBirth = null;
+                userData.password = null;
+
+                // Set new user data
+                userData.username = usernameController.text.trim();
+                userData.password = passwordController.text;
+
+                loginUser(
+                  usernameController.text.trim(),
+                  passwordController.text,
+                ).then((result) {
+                  if (result == "success") {
+                    Navigator.pushNamed(context, '/home');
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          "Login failed: $result",
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        backgroundColor: Colors.red.shade400,
+                      ),
+                    );
+                  }
+                });
               }
             },
             child: Container(
