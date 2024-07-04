@@ -4,7 +4,7 @@ import 'package:twitter_copycat/features/auth/controller/user_data_handler.dart'
 import 'package:twitter_copycat/theme/pallete.dart';
 
 class CreateTweetView extends StatelessWidget {
-  const CreateTweetView({Key? key}) : super(key: key);
+  const CreateTweetView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -54,14 +54,14 @@ class CreateTweetView extends StatelessWidget {
             children: [
               TextField(
                 controller: tweetTextController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: "What's happening?",
                   hintStyle: TextStyle(
                     color: Pallete.greyColor,
                     fontSize: 18,
                   ),
                   border: OutlineInputBorder(),
-                  contentPadding: const EdgeInsets.symmetric(
+                  contentPadding: EdgeInsets.symmetric(
                     horizontal: 15,
                     vertical: 12,
                   ),

@@ -58,7 +58,7 @@ class CreateAccountButton extends StatelessWidget {
 }
 
 class FeatherButton extends StatelessWidget {
-  const FeatherButton({Key? key}) : super(key: key);
+  const FeatherButton({super.key});
 
   @override
   Widget build(BuildContext context) {

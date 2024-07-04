@@ -1,4 +1,8 @@
+import 'package:appwrite/models.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:twitter_copycat/constants/assets_constants.dart';
+import 'package:twitter_copycat/features/auth/controller/auth.dart';
 import 'package:twitter_copycat/theme/pallete.dart';
 
 class Space extends StatelessWidget {
@@ -28,6 +32,170 @@ class OrLine extends StatelessWidget {
           Expanded(child: Divider(color: Pallete.geryWhiteColor)),
         ],
       ),
+    );
+  }
+}
+
+class TweetWidget extends StatelessWidget {
+  final String userName;
+  final String date;
+  final String body;
+
+  const TweetWidget({
+    super.key,
+    required this.userName,
+    required this.date,
+    required this.body,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    String truncatedDate = date.length > 10 ? date.substring(0, 10) : date;
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // User Image
+          SvgPicture.asset(
+            AssetsConstants.userIcon,
+            width: 40,
+            height: 40,
+            color: Pallete.greyColor,
+          ),
+          const SizedBox(width: 10),
+          // Tweet Content
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // User Name and Date with Three Dots Icon
+                Row(
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Text(
+                            userName,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            truncatedDate,
+                            style: const TextStyle(
+                              color: Pallete.greyColor,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SvgPicture.asset(
+                      AssetsConstants.threeDotsIcon,
+                      width: 12,
+                      height: 12,
+                      color: Pallete.greyColor,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 5),
+                // Tweet Body
+                Text(
+                  body,
+                  style: const TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                // Tweet Actions
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SvgPicture.asset(
+                      AssetsConstants.commentIcon,
+                      width: 20,
+                      height: 20,
+                      color: Pallete.greyColor,
+                    ),
+                    SvgPicture.asset(
+                      AssetsConstants.retweetIcon,
+                      width: 20,
+                      height: 20,
+                      color: Pallete.greyColor,
+                    ),
+                    SvgPicture.asset(
+                      AssetsConstants.likeOutlinedIcon,
+                      width: 20,
+                      height: 20,
+                      color: Pallete.greyColor,
+                    ),
+                    SvgPicture.asset(
+                      AssetsConstants.uploadIcon,
+                      width: 16,
+                      height: 16,
+                      color: Pallete.greyColor,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class TweetsList extends StatefulWidget {
+  const TweetsList({super.key});
+
+  @override
+  _TweetsListState createState() => _TweetsListState();
+}
+
+class _TweetsListState extends State<TweetsList> {
+  Future<List<Document>>? _tweetsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _tweetsFuture = listTweets(); //check 
+    //print("InitState: Fetching tweets...");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<List<Document>>(
+      future: _tweetsFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return const Center(child: Text('No tweets found.'));
+        } else {
+          List<Document> tweets = snapshot.data!;
+          //print("Number of tweets received: ${tweets.length}");
+          return ListView.builder(
+            itemCount: tweets.length,
+            itemBuilder: (context, index) {
+              var tweet = tweets[index];
+              String userName = tweet.data['user'] ?? 'Unknown User';
+              String date = tweet.data['date'] ?? 'Unknown Date';
+              String body = tweet.data['body'] ?? '';
+              return TweetWidget(
+                userName: userName,
+                date: date,
+                body: body,
+              );
+            },
+          );
+        }
+      },
     );
   }
 }

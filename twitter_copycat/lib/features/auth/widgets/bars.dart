@@ -412,7 +412,7 @@ class LoginNavBar extends StatelessWidget {
   final TextEditingController usernameController;
   final TextEditingController passwordController;
 
-  const LoginNavBar({
+  const LoginNavBar({super.key, 
     required this.formKey,
     required this.usernameController,
     required this.passwordController,
