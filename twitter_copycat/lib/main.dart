@@ -7,8 +7,10 @@ import 'package:twitter_copycat/features/auth/view/register_view.dart';
 import 'package:twitter_copycat/features/auth/view/create_tweet_view.dart';
 import 'package:twitter_copycat/features/auth/view/usr_view.dart';
 import 'package:twitter_copycat/theme/theme.dart';
+//import 'package:twitter_copycat/features/auth/controller/auth.dart';
 
 void main() {
+//  appwriteService();
   runApp(const MyApp());
 }
 

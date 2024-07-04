@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:twitter_copycat/features/auth/controller/auth.dart';
+import 'package:twitter_copycat/features/auth/controller/user_data_handler.dart';
 import 'package:twitter_copycat/theme/pallete.dart';
 
 class CreateTweetView extends StatelessWidget {
@@ -8,8 +10,16 @@ class CreateTweetView extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextEditingController tweetTextController = TextEditingController();
 
-    void saveTweet() {
+    void saveTweet() async {
       String tweetText = tweetTextController.text;
+      String userId = userData.username ?? 'default_user_id';
+      if (userId.isEmpty) {
+        print('Error: User ID is null or empty');
+        return;
+      }
+
+      print('User ID: $userId');
+      await createTweet(userId, tweetText);
       print('Tweet guardado: $tweetText');
       Navigator.pop(context);
     }
@@ -29,7 +39,7 @@ class CreateTweetView extends StatelessWidget {
               onPressed: saveTweet,
               style: ElevatedButton.styleFrom(
                 foregroundColor: Pallete.whiteColor,
-                 backgroundColor: Pallete.blueColor,
+                backgroundColor: Pallete.blueColor,
               ),
               child: const Text('Tweet'),
             ),
