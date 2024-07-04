@@ -150,7 +150,7 @@ class TweetWidget extends StatelessWidget {
 }
 
 class TweetsList extends StatefulWidget {
-  const TweetsList({Key? key}) : super(key: key);
+  const TweetsList({super.key});
 
   @override
   _TweetsListState createState() => _TweetsListState();

@@ -12,15 +12,10 @@ class CreateTweetView extends StatelessWidget {
 
     void saveTweet() async {
       String tweetText = tweetTextController.text;
-      String userId = userData.username ?? 'default_user_id';
-      /*if (userId.isEmpty) {
-        print('Error: User ID is null or empty');
-        return;
-      }
-
-      print('User ID: $userId');*/
+      String userId = userData.name ?? 'default_user_id';
       await createTweet(userId, tweetText);
-      print('Tweet guardado: $tweetText');
+      print('User: $userId');
+      print('Tweet saved: $tweetText');
       Navigator.pop(context);
     }
 

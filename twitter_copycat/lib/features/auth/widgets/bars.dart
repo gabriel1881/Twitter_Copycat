@@ -443,17 +443,17 @@ class LoginNavBar extends StatelessWidget {
           GestureDetector(
             onTap: () {
               if (formKey.currentState!.validate()) {
-                // Clear previous user data
-                userData.name = null;
-                userData.email = null;
-                userData.phone = null;
-                userData.username = null;
-                userData.dateOfBirth = null;
-                userData.password = null;
+                // // Clear previous user data
+                // userData.name = null;
+                // userData.email = null;
+                // userData.phone = null;
+                // userData.username = null;
+                // userData.dateOfBirth = null;
+                // userData.password = null;
 
-                // Set new user data
-                userData.username = usernameController.text.trim();
-                userData.password = passwordController.text;
+                // // Set new user data
+                // userData.username = usernameController.text.trim();
+                // userData.password = passwordController.text;
 
                 loginUser(
                   usernameController.text.trim(),
@@ -491,6 +491,61 @@ class LoginNavBar extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class StoriesHeader extends StatelessWidget {
+  const StoriesHeader({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    const double iconSize = 30; // Tamaño del icono reducido
+    const double circleSize = 45; // Tamaño del círculo contenedor
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          _buildUserIcon('Add', iconSize, circleSize),
+          _buildUserIcon('Gabriel', iconSize, circleSize),
+          _buildUserIcon('Esteban', iconSize, circleSize),
+          _buildUserIcon('Sofia', iconSize, circleSize),
+          _buildUserIcon('Facundo', iconSize, circleSize),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildUserIcon(String name, double iconSize, double circleSize) {
+    return Column(
+      children: [
+        Container(
+          width: circleSize,
+          height: circleSize,
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+            color: Pallete.greyBackgroundColor,
+          ),
+          child: Center(
+            child: SvgPicture.asset(
+              AssetsConstants.userIcon,
+              width: iconSize,
+              height: iconSize,
+              color: Pallete.geryWhiteColor,
+            ),
+          ),
+        ),
+        const SizedBox(height: 5),
+        Text(
+          name,
+          style: const TextStyle(
+            fontSize: 12,
+            color: Pallete.greyColor,
+          ),
+        ),
+      ],
     );
   }
 }

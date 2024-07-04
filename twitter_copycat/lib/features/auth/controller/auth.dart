@@ -1,5 +1,8 @@
 import 'package:appwrite/appwrite.dart';
+import 'package:appwrite/enums.dart';
 import 'package:appwrite/models.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AppwriteService {
   static final AppwriteService _instance = AppwriteService._internal();
@@ -21,6 +24,13 @@ class AppwriteService {
     databases = Databases(client);
   }
 }
+
+final GoogleSignIn _googleSignIn = GoogleSignIn(
+  scopes: [
+    'email',
+    'https://www.googleapis.com/auth/contacts.readonly',
+  ],
+);
 
 Future<String> createEmailUser(String name, String email, String password) async {
   try {
@@ -77,3 +87,61 @@ Stream<List<Document>> pollTweets() async* { // Creates a stream that periodical
     }
   }
 }
+
+// get details of the user logged in
+Future<User?> getUser() async {
+  try {
+    final user = await AppwriteService().account.get();
+    return user;
+  } catch (e) {
+    print('Error fetching user: $e');
+    return null;
+  }
+}
+
+Future<void> signInWithGoogle() async {
+  try {
+    final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+    if (googleUser == null) {
+      // El usuario canceló la operación
+      return;
+    }
+
+    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+    // Llama a Appwrite con el token de Google
+    final session = await AppwriteService().account.createOAuth2Session(
+      provider: OAuthProvider.google,
+      success: 'https://appwrite.io/auth/oauth2/succes', // URL de redireccionamiento en caso de éxito
+      failure: 'https://appwrite.io/auth/oauth2/failure', // URL de redireccionamiento en caso de fallo
+    );
+
+    print(session);
+  } catch (error) {
+    print(error);
+  }
+}
+// Future<bool> continueWithGoogle() async {
+//   try {
+//     final result = await AppwriteService().account.createOAuth2Session(
+//       provider: OAuthProvider.google,
+//       success: 'https://localhost80/v1/auth.html',
+//       failure: 'https://appwrite.io/auth/oauth2/failure',
+//       scopes: ['profile', 'email'],
+//     );
+
+//     final url = Uri.parse(result.data['url']);
+//     if (await canLaunchUrl(url)) {
+//       await launchUrl(url, mode: LaunchMode.externalApplication);
+//       return true;
+//     } else {
+//       throw 'Could not launch $url';
+//     }
+//   } on AppwriteException catch (e) {
+//     print('Appwrite Exception: ${e.message}');
+//     return false;
+//   } catch (e) {
+//     print('Error: $e');
+//     return false;
+//   }
+// }

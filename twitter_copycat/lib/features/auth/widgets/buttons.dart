@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:twitter_copycat/constants/assets_constants.dart';
+import 'package:twitter_copycat/features/auth/controller/auth.dart';
 import 'package:twitter_copycat/theme/pallete.dart';
 
 class GoogleButton extends StatelessWidget {
-  const GoogleButton({super.key});
+  const GoogleButton({Key? key});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {
-        // Google Login
+      onPressed: () async {
+        await signInWithGoogle(); 
+        Navigator.of(context).pushReplacementNamed('/home');
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: Pallete.whiteColor,
@@ -24,11 +26,12 @@ class GoogleButton extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           SvgPicture.asset(
-            AssetsConstants.googleIcon, 
-            height: 24.0, 
-            width: 24.0,
+            AssetsConstants.googleIcon,
+            height: 18.0,
+            width: 18.0,
           ),
-          const SizedBox(width: 150), 
+          const SizedBox(width: 12), 
+          const Text('Sign in with Google'), 
         ],
       ),
     );
