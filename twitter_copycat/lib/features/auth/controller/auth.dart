@@ -58,18 +58,22 @@ Future<void> createTweet(String userId, String tweetContent) async {
   }
 }
 
-Future<List<Document>> listTweets() async {
-  try {
-    final response = await AppwriteService().databases.listDocuments(
-      databaseId: 'twitter_database',
-      collectionId: '66860d2a001a6a9ad263',
-      queries: [
-        Query.notEqual('user', ''), // Filtra documentos con 'content' no vacío
-      ],
-    );
-    return response.documents;
-  } on AppwriteException catch (e) {
-    print('Error fetching tweets: ${e.message}');
-    return [];
+Stream<List<Document>> pollTweets() async* { // Creates a stream that periodically fetches tweets from the database.
+  while (true) {
+    try {
+      final response = await AppwriteService().databases.listDocuments(
+        databaseId: 'twitter_database',
+        collectionId: '66860d2a001a6a9ad263',
+        queries: [
+          Query.notEqual('user', ''), 
+        ],
+      );
+      yield response.documents;
+      await Future.delayed(const Duration(seconds: 10)); // The function waits for 10 seconds between each query to reduce
+    } catch (e) {
+      print('Error fetching tweets: $e');
+      yield []; 
+      await Future.delayed(const Duration(seconds: 10)); // server load and network traffic.
+    }
   }
 }

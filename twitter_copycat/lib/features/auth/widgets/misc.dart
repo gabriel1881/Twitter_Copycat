@@ -150,26 +150,25 @@ class TweetWidget extends StatelessWidget {
 }
 
 class TweetsList extends StatefulWidget {
-  const TweetsList({super.key});
+  const TweetsList({Key? key}) : super(key: key);
 
   @override
   _TweetsListState createState() => _TweetsListState();
 }
 
 class _TweetsListState extends State<TweetsList> {
-  Future<List<Document>>? _tweetsFuture;
+  late Stream<List<Document>> _tweetsStream;
 
   @override
   void initState() {
     super.initState();
-    _tweetsFuture = listTweets(); //check 
-    //print("InitState: Fetching tweets...");
+    _tweetsStream = pollTweets();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Document>>(
-      future: _tweetsFuture,
+    return StreamBuilder<List<Document>>(
+      stream: _tweetsStream,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
@@ -179,7 +178,6 @@ class _TweetsListState extends State<TweetsList> {
           return const Center(child: Text('No tweets found.'));
         } else {
           List<Document> tweets = snapshot.data!;
-          //print("Number of tweets received: ${tweets.length}");
           return ListView.builder(
             itemCount: tweets.length,
             itemBuilder: (context, index) {
