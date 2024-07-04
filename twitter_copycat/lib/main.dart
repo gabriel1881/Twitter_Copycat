@@ -4,6 +4,7 @@ import 'package:twitter_copycat/features/auth/view/login_view.dart';
 import 'package:twitter_copycat/features/auth/view/start_view.dart';
 import 'package:twitter_copycat/features/auth/view/password_view.dart';
 import 'package:twitter_copycat/features/auth/view/register_view.dart';
+import 'package:twitter_copycat/features/auth/view/create_tweet_view.dart';
 import 'package:twitter_copycat/features/auth/view/usr_view.dart';
 import 'package:twitter_copycat/theme/theme.dart';
 
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
         '/pass': (context) => const PasswordView(),
         '/login': (context) => const LoginView(),
         '/home' : (context) => const HomeView(),
-      //  '/tweet' : (context) => const CreateTweetView(),
+        '/tweet' : (context) => const CreateTweetView(),
       },
     );
   }
