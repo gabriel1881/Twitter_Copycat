@@ -47,9 +47,9 @@ Future<void> createTweet(String userId, String tweetContent) async {
       collectionId: '66860d2a001a6a9ad263',
       documentId: ID.unique(),
       data: {
-        'userId': userId,
-        'content': tweetContent,
-        'createdAt': DateTime.now().toIso8601String(),
+        'user': userId,
+        'body': tweetContent,
+        'date': DateTime.now().toIso8601String(),
       },
     );
   } on AppwriteException catch (e) {
