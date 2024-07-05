@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// Pallete class defines a set of color constants for the application.
 class Pallete {
   static const Color greyBackgroundColor = Color.fromARGB(20,20,20,1);
   static const Color backgroundColor = Colors.black;

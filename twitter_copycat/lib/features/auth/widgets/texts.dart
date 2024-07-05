@@ -6,6 +6,7 @@ import 'package:twitter_copycat/constants/assets_constants.dart';
 import 'package:twitter_copycat/theme/pallete.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+//Renders large text with padding and a specific font size.
 class LargeText extends StatelessWidget {
   final String text;
 
@@ -24,6 +25,7 @@ class LargeText extends StatelessWidget {
   }
 }
 
+//Displays a rich text with clickable links to Terms, Privacy Policy, and Cookie Use.
 class SmallText extends StatelessWidget {
   const SmallText({super.key});
 
@@ -75,6 +77,7 @@ class SmallText extends StatelessWidget {
   }
 }
 
+//Provides a text link for navigating to the login screen.
 class LoginText extends StatelessWidget {
   const LoginText({super.key});
 
@@ -103,6 +106,7 @@ class LoginText extends StatelessWidget {
   }
 }
 
+//A customizable text field widget with optional max length and controller.
 class CustomTextField extends StatefulWidget {
   final String hintText;
   final int? maxLength;
@@ -175,6 +179,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   }
 }
 
+//Extends CustomTextField to include a character counter.
 class CustomTextFieldWithCounter extends CustomTextField {
   const CustomTextFieldWithCounter({
     super.key,
@@ -228,6 +233,7 @@ class _CustomTextFieldWithCounterState extends _CustomTextFieldState {
   }
 }
 
+//A password field widget with toggleable visibility.
 class CustomPasswordField extends StatefulWidget {
   final String hintText;
   final TextEditingController? controller; 

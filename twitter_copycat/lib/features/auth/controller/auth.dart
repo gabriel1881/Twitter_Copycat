@@ -2,9 +2,9 @@ import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/enums.dart';
 import 'package:appwrite/models.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class AppwriteService {
+  // Singleton pattern to ensure a single instance of AppwriteService.
   static final AppwriteService _instance = AppwriteService._internal();
   late final Client client;
   late final Account account;
@@ -13,18 +13,22 @@ class AppwriteService {
   factory AppwriteService() {
     return _instance;
   }
-
+  
+  // Private constructor for the singleton pattern.
   AppwriteService._internal() {
+    // Initialize the Appwrite client with endpoint, project ID, and self-signed status.
     client = Client()
-        .setEndpoint('https://cloud.appwrite.io/v1') // Your API Endpoint
-        .setProject('6681850100271f51474d') // Your project ID
+        .setEndpoint('https://cloud.appwrite.io/v1') // API Endpoint
+        .setProject('6681850100271f51474d') // project ID
         .setSelfSigned(status: true); // For self-signed certificates, only use for development
 
+    // Initialize account and databases services using the client.
     account = Account(client);
     databases = Databases(client);
   }
 }
 
+// GoogleSignIn instance with scopes for email and readonly access to contacts.
 final GoogleSignIn _googleSignIn = GoogleSignIn(
   scopes: [
     'email',
@@ -32,6 +36,7 @@ final GoogleSignIn _googleSignIn = GoogleSignIn(
   ],
 );
 
+// Function to create a new user with email and password.
 Future<String> createEmailUser(String name, String email, String password) async {
   try {
     await AppwriteService().account.create(
@@ -42,6 +47,7 @@ Future<String> createEmailUser(String name, String email, String password) async
   }
 }
 
+// Function to log in a user with email and password.
 Future<String> loginUser(String email, String password) async {
   try {
     await AppwriteService().account.createEmailPasswordSession(email: email, password: password);
@@ -51,6 +57,7 @@ Future<String> loginUser(String email, String password) async {
   }
 }
 
+// Function to create a new tweet document in the database.
 Future<void> createTweet(String userId, String tweetContent) async {
   try {
     await AppwriteService().databases.createDocument(
@@ -68,7 +75,8 @@ Future<void> createTweet(String userId, String tweetContent) async {
   }
 }
 
-Stream<List<Document>> pollTweets() async* { // Creates a stream that periodically fetches tweets from the database.
+// Creates a stream that periodically fetches tweets from the database.
+Stream<List<Document>> pollTweets() async* { 
   while (true) {
     try {
       final response = await AppwriteService().databases.listDocuments(
@@ -88,7 +96,7 @@ Stream<List<Document>> pollTweets() async* { // Creates a stream that periodical
   }
 }
 
-// get details of the user logged in
+//  Function to get the details of the currently logged-in user.
 Future<User?> getUser() async {
   try {
     final user = await AppwriteService().account.get();
@@ -99,21 +107,17 @@ Future<User?> getUser() async {
   }
 }
 
+//  Function to sign in with Google using OAuth2.
 Future<void> signInWithGoogle() async {
   try {
     final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
     if (googleUser == null) {
-      // El usuario canceló la operación
       return;
     }
-
-    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-
-    // Llama a Appwrite con el token de Google
     final session = await AppwriteService().account.createOAuth2Session(
       provider: OAuthProvider.google,
-      success: 'https://appwrite.io/auth/oauth2/succes', // URL de redireccionamiento en caso de éxito
-      failure: 'https://appwrite.io/auth/oauth2/failure', // URL de redireccionamiento en caso de fallo
+      success: 'https://appwrite.io/auth/oauth2/succes', 
+      failure: 'https://appwrite.io/auth/oauth2/failure', 
     );
 
     print(session);
@@ -121,27 +125,3 @@ Future<void> signInWithGoogle() async {
     print(error);
   }
 }
-// Future<bool> continueWithGoogle() async {
-//   try {
-//     final result = await AppwriteService().account.createOAuth2Session(
-//       provider: OAuthProvider.google,
-//       success: 'https://localhost80/v1/auth.html',
-//       failure: 'https://appwrite.io/auth/oauth2/failure',
-//       scopes: ['profile', 'email'],
-//     );
-
-//     final url = Uri.parse(result.data['url']);
-//     if (await canLaunchUrl(url)) {
-//       await launchUrl(url, mode: LaunchMode.externalApplication);
-//       return true;
-//     } else {
-//       throw 'Could not launch $url';
-//     }
-//   } on AppwriteException catch (e) {
-//     print('Appwrite Exception: ${e.message}');
-//     return false;
-//   } catch (e) {
-//     print('Error: $e');
-//     return false;
-//   }
-// }

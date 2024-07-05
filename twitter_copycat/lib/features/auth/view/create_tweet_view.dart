@@ -8,11 +8,14 @@ class CreateTweetView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     // Controller to manage the text input for the tweet.
     final TextEditingController tweetTextController = TextEditingController();
-
+    
+    // Function to save the tweet to the database.
     void saveTweet() async {
       String tweetText = tweetTextController.text;
       String userId = userData.name ?? 'default_user_id';
+      // Use the user's name as the userId, or a default value if the name is null.
       await createTweet(userId, tweetText);
       print('User: $userId');
       print('Tweet saved: $tweetText');

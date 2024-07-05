@@ -11,16 +11,16 @@ class RegisterView extends StatefulWidget {
 }
 
 class _RegisterViewState extends State<RegisterView> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailPhoneController = TextEditingController();
-  final TextEditingController _dobController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController(); // Controller for the user's name input field.
+  final TextEditingController _emailPhoneController = TextEditingController(); // Controller for email/phone input field.
+  final TextEditingController _dobController = TextEditingController(); // Controller for date of birth input field.
 
   void _nextPage() {
     setState(() {
       userData.name = _nameController.text;
       userData.email =
-          _emailPhoneController.text.contains('@') ? _emailPhoneController.text : null;
-      userData.phone = RegExp(r'^[0-9]+$').hasMatch(_emailPhoneController.text)
+          _emailPhoneController.text.contains('@') ? _emailPhoneController.text : null; // Set email if valid.
+      userData.phone = RegExp(r'^[0-9]+$').hasMatch(_emailPhoneController.text)  // Set phone number if valid.
           ? _emailPhoneController.text
           : null;
       userData.dateOfBirth = _dobController.text;
@@ -30,7 +30,7 @@ class _RegisterViewState extends State<RegisterView> {
     print('User name: ${userData.name}');
     print('User email: ${userData.email}');
     print('User birth: ${userData.dateOfBirth}');
-    Navigator.pushNamed(context, '/usr');
+    Navigator.pushNamed(context, '/usr'); // Navigate to '/usr' route after data is set.
   }
 
   @override

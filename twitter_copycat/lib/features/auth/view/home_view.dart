@@ -20,19 +20,19 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     super.initState();
-    fetchAndSetUserData();
+    fetchAndSetUserData(); // Fetch user data when the widget is initialized.
   }
 
   Future<void> fetchAndSetUserData() async {
-    User? user = await getUser();
+    User? user = await getUser(); // Retrieve the current user data.
     if (user != null) {
       setState(() {
-        userData.name = user.name;
-        isLoading = false;
+        userData.name = user.name; // Set the user's name in the global userData object.
+        isLoading = false; // Set loading to false once the user data is fetched.
       });
     } else {
       setState(() {
-        isLoading = false;
+        isLoading = false; // Set loading to false even if no user data is found.
       });
     }
   }

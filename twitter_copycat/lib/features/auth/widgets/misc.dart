@@ -5,6 +5,7 @@ import 'package:twitter_copycat/constants/assets_constants.dart';
 import 'package:twitter_copycat/features/auth/controller/auth.dart';
 import 'package:twitter_copycat/theme/pallete.dart';
 
+// Vertical space.
 class Space extends StatelessWidget {
   final double height;
   const Space({required this.height, super.key});
@@ -15,6 +16,7 @@ class Space extends StatelessWidget {
   }
 }
 
+//Displays a horizontal line with the text "or" in the middle.
 class OrLine extends StatelessWidget {
   const OrLine({super.key});
 
@@ -36,6 +38,7 @@ class OrLine extends StatelessWidget {
   }
 }
 
+//Displays a tweet with user information, date, tweet content, and action icons.
 class TweetWidget extends StatelessWidget {
   final String userName;
   final String date;
@@ -149,6 +152,7 @@ class TweetWidget extends StatelessWidget {
   }
 }
 
+//Uses StreamBuilder to fetch and display a list of tweets.
 class TweetsList extends StatefulWidget {
   const TweetsList({super.key});
 

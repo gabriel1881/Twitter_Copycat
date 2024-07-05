@@ -7,7 +7,7 @@ import 'package:twitter_copycat/theme/pallete.dart';
 import 'package:twitter_copycat/theme/theme.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
+// Widget displaying the Twitter logo in a row
 class TwitterHeader extends StatelessWidget {
   const TwitterHeader({super.key});
 
@@ -30,6 +30,7 @@ class TwitterHeader extends StatelessWidget {
   }
 }
 
+// Widget extending TwitterHeader, minor layout adjustment
 class CommonTwitterHeader extends TwitterHeader {
   const CommonTwitterHeader({super.key});
 
@@ -44,6 +45,7 @@ class CommonTwitterHeader extends TwitterHeader {
   }
 }
 
+// Widget extending TwitterHeader, with an X icon to navigate back to the start screen
 class XTwitterHeader extends TwitterHeader {
   const XTwitterHeader({super.key});
 
@@ -75,6 +77,7 @@ class XTwitterHeader extends TwitterHeader {
   }
 }
 
+// Widget extending TwitterHeader, with a back icon to navigate back
 class BackTwitterHeader extends TwitterHeader {
   const BackTwitterHeader({super.key});
 
@@ -106,6 +109,7 @@ class BackTwitterHeader extends TwitterHeader {
   }
 }
 
+// Widget extending TwitterHeader, specific to the home screen with additional icons
 class HomeTwitterHeader extends TwitterHeader {
   const HomeTwitterHeader({super.key});
 
@@ -142,6 +146,7 @@ class HomeTwitterHeader extends TwitterHeader {
   }
 }
 
+// Widget for the navigation bar during registration with a 'Next' button
 class RegisterNavBar extends StatelessWidget {
   final String nextPageRoute;
   final VoidCallback? onTap;
@@ -188,6 +193,7 @@ class RegisterNavBar extends StatelessWidget {
   }
 }
 
+// Widget for the navigation bar during user input with a 'Next' button
 class UsrNavBar extends StatelessWidget {
   final String nextPageRoute;
   final VoidCallback? onTap;
@@ -252,6 +258,7 @@ class UsrNavBar extends StatelessWidget {
   }
 }
 
+// Widget for the bottom navigation bar on the home screen
 class HomeNavBar extends StatefulWidget {
   const HomeNavBar({super.key});
 
@@ -321,6 +328,7 @@ class _HomeNavBarState extends State<HomeNavBar> {
   }
 }
 
+// Displays a navigation bar at the bottom of a view related to password-based registration.
 class PassNavBar extends StatelessWidget {
   final String nextPageRoute;
   final Future<String> Function(String, String, String) createUser;
@@ -407,6 +415,7 @@ class PassNavBar extends StatelessWidget {
   }
 }
 
+//Validates user input and attempts to log in when the form is valid, navigating to the home screen upon successful login or displaying an error message if login fails.
 class LoginNavBar extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final TextEditingController usernameController;
@@ -443,18 +452,6 @@ class LoginNavBar extends StatelessWidget {
           GestureDetector(
             onTap: () {
               if (formKey.currentState!.validate()) {
-                // // Clear previous user data
-                // userData.name = null;
-                // userData.email = null;
-                // userData.phone = null;
-                // userData.username = null;
-                // userData.dateOfBirth = null;
-                // userData.password = null;
-
-                // // Set new user data
-                // userData.username = usernameController.text.trim();
-                // userData.password = passwordController.text;
-
                 loginUser(
                   usernameController.text.trim(),
                   passwordController.text,
@@ -495,6 +492,7 @@ class LoginNavBar extends StatelessWidget {
   }
 }
 
+//Displays a row of user icons with names, representing a section dedicated to user stories or similar content.
 class StoriesHeader extends StatelessWidget {
   const StoriesHeader({super.key});
 

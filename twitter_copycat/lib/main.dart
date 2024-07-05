@@ -7,17 +7,15 @@ import 'package:twitter_copycat/features/auth/view/register_view.dart';
 import 'package:twitter_copycat/features/auth/view/create_tweet_view.dart';
 import 'package:twitter_copycat/features/auth/view/usr_view.dart';
 import 'package:twitter_copycat/theme/theme.dart';
-//import 'package:twitter_copycat/features/auth/controller/auth.dart';
 
 void main() {
-//  appwriteService();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  // Root of the application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

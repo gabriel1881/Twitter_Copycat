@@ -11,7 +11,7 @@ class PasswordView extends StatefulWidget {
 }
 
 class _PasswordViewState extends State<PasswordView> {
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController(); // Controller for the password input field.
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +43,8 @@ class _PasswordViewState extends State<PasswordView> {
       ),
       bottomNavigationBar: PassNavBar(
         nextPageRoute: '/login',
-        createUser: createEmailUser,
-        enableCreateFunctionality: true,
+        createUser: createEmailUser, // Function to create a user account using email/password.
+        enableCreateFunctionality: true, // Enable the create functionality in the PassNavBar.
         passwordController: _passwordController,
       ),
     );
