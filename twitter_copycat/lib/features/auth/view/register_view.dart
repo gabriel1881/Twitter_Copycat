@@ -19,7 +19,7 @@ class _RegisterViewState extends State<RegisterView> {
     setState(() {
       userData.name = _nameController.text;
       userData.email =
-          _emailPhoneController.text.contains('@') ? _emailPhoneController.text : null; // Set email if valid.
+          _emailPhoneController.text.contains('.com') ? _emailPhoneController.text : null; // Set email if valid.
       userData.phone = RegExp(r'^[0-9]+$').hasMatch(_emailPhoneController.text)  // Set phone number if valid.
           ? _emailPhoneController.text
           : null;
